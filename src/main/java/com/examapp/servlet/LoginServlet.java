@@ -1,7 +1,6 @@
 package com.examapp.servlet;
 
 import com.examapp.dao.UserDao;
-
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -10,6 +9,7 @@ import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 
 public class LoginServlet extends HttpServlet {
+
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
@@ -21,9 +21,10 @@ public class LoginServlet extends HttpServlet {
 
         if (isValid) {
             HttpSession session = request.getSession();
-            response.sendRedirect("selectLanguage.jsp");
+            session.setAttribute("username", username); // ✅ IMPORTANT
+            response.sendRedirect(request.getContextPath() + "/selectLanguage.jsp");
         } else {
-            response.sendRedirect("login.jsp?error=1");
+            response.sendRedirect(request.getContextPath() + "/login.jsp?error=1");
         }
     }
 }
