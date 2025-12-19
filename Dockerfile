@@ -5,7 +5,7 @@ COPY . .
 RUN mvn clean package -DskipTests
 
 # -------- RUNTIME STAGE --------
-FROM tomcat:11-jdk11
+FROM tomcat:9.0-jdk17
 
 # Remove default apps
 RUN rm -rf /usr/local/tomcat/webapps/*
