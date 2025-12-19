@@ -1,14 +1,13 @@
-# Use Tomcat 11 with Java 17
+# ---------- BUILD STAGE ----------
+FROM maven:3.9.9-eclipse-temurin-17 AS build
+WORKDIR /app
+COPY . .
+RUN mvn clean package -DskipTests
+
+# ---------- RUNTIME STAGE ----------
 FROM tomcat:11.0-jdk17
-
-# Remove default Tomcat apps
 RUN rm -rf /usr/local/tomcat/webapps/*
+COPY --from=build /app/target/OnlineExamApp.war /usr/local/tomcat/webapps/ROOT.war
 
-# Copy WAR file into Tomcat
-COPY target/OnlineExamApp.war /usr/local/tomcat/webapps/ROOT.war
-
-# Expose port Render expects
 EXPOSE 8080
-
-# Start Tomcat
 CMD ["catalina.sh", "run"]
