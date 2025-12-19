@@ -124,9 +124,9 @@
         </div>
         
         <%
-                        // Get table structure
+                        // Get table structure (Postgres-compatible)
                         stmt = conn.createStatement();
-                        rs = stmt.executeQuery("DESCRIBE quiz_results");
+                        rs = stmt.executeQuery("SELECT column_name, data_type, is_nullable, column_default FROM information_schema.columns WHERE table_name='quiz_results' ORDER BY ordinal_position");
         %>
         
         <h3>Table Structure:</h3>
@@ -135,8 +135,7 @@
                 <tr>
                     <th>Column</th>
                     <th>Type</th>
-                    <th>Null</th>
-                    <th>Key</th>
+                    <th>Nullable</th>
                     <th>Default</th>
                 </tr>
             </thead>
@@ -145,11 +144,10 @@
                         while (rs.next()) {
         %>
                 <tr>
-                    <td><%= rs.getString(1) %></td>
-                    <td><%= rs.getString(2) %></td>
-                    <td><%= rs.getString(3) %></td>
-                    <td><%= rs.getString(4) %></td>
-                    <td><%= rs.getString(5) %></td>
+                    <td><%= rs.getString("column_name") %></td>
+                    <td><%= rs.getString("data_type") %></td>
+                    <td><%= rs.getString("is_nullable") %></td>
+                    <td><%= rs.getString("column_default") %></td>
                 </tr>
         <%
                         }

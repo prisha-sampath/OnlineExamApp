@@ -194,8 +194,14 @@
             return;
         }
         
-        List<Map<String, Object>> results = QuizResultsDao.getAllResults();
+        List<Map<String, Object>> results = new java.util.ArrayList<>();
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm");
+        try {
+            results = QuizResultsDao.getAllResults();
+        } catch (Exception e) {
+            // Show friendly error instead of letting the page throw a NullPointerException
+            out.println("<div style='margin:20px;padding:20px;background:#fee2e2;border-left:5px solid #ef4444;'><strong>Database error:</strong> " + e.getMessage() + "<br>Check that NEON_DB_URL, NEON_DB_USER and NEON_DB_PASSWORD are set and the DB is reachable. <a href=\"diagnostic.jsp\">Run diagnostic</a></div>");
+        }
     %>
     
     <div class="container">
