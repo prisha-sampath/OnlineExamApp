@@ -1,9 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
 <web-app xmlns="https://jakarta.ee/xml/ns/jakartaee"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd"
-         version="6.0">
-  <display-name>Archetype Created Web Application</display-name>
-  
+         xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee
+                             https://jakarta.ee/xml/ns/jakartaee/web-app_5_0.xsd"
+         version="5.0">
+
+  <display-name>OnlineExamApp</display-name>
+
+  <!-- Login -->
   <servlet>
     <servlet-name>LoginServlet</servlet-name>
     <servlet-class>com.examapp.servlet.LoginServlet</servlet-class>
@@ -13,6 +18,7 @@
     <url-pattern>/login</url-pattern>
   </servlet-mapping>
 
+  <!-- Register -->
   <servlet>
     <servlet-name>RegisterServlet</servlet-name>
     <servlet-class>com.examapp.servlet.RegisterServlet</servlet-class>
@@ -22,6 +28,7 @@
     <url-pattern>/register</url-pattern>
   </servlet-mapping>
 
+  <!-- Quiz -->
   <servlet>
     <servlet-name>QuizServlet</servlet-name>
     <servlet-class>com.examapp.servlet.QuizServlet</servlet-class>
@@ -31,6 +38,7 @@
     <url-pattern>/quiz</url-pattern>
   </servlet-mapping>
 
+  <!-- Java Quiz -->
   <servlet>
     <servlet-name>JavaQuizServlet</servlet-name>
     <servlet-class>com.examapp.servlet.JavaQuizServlet</servlet-class>
@@ -40,6 +48,7 @@
     <url-pattern>/javaQuiz</url-pattern>
   </servlet-mapping>
 
+  <!-- C++ Quiz -->
   <servlet>
     <servlet-name>CppQuizServlet</servlet-name>
     <servlet-class>com.examapp.servlet.CppQuizServlet</servlet-class>
@@ -49,6 +58,7 @@
     <url-pattern>/cppQuiz</url-pattern>
   </servlet-mapping>
 
+  <!-- DSA Quiz -->
   <servlet>
     <servlet-name>DsaQuizServlet</servlet-name>
     <servlet-class>com.examapp.servlet.DsaQuizServlet</servlet-class>
@@ -58,6 +68,7 @@
     <url-pattern>/dsaQuiz</url-pattern>
   </servlet-mapping>
 
+  <!-- Python Quiz -->
   <servlet>
     <servlet-name>PythonQuizServlet</servlet-name>
     <servlet-class>com.examapp.servlet.PythonQuizServlet</servlet-class>
@@ -67,6 +78,7 @@
     <url-pattern>/pythonQuiz</url-pattern>
   </servlet-mapping>
 
+  <!-- Admin Login -->
   <servlet>
     <servlet-name>AdminLoginServlet</servlet-name>
     <servlet-class>com.examapp.servlet.AdminLoginServlet</servlet-class>
@@ -76,6 +88,7 @@
     <url-pattern>/adminLogin</url-pattern>
   </servlet-mapping>
 
+  <!-- Result -->
   <servlet>
     <servlet-name>ResultServlet</servlet-name>
     <servlet-class>com.examapp.servlet.ResultServlet</servlet-class>
@@ -85,6 +98,7 @@
     <url-pattern>/result</url-pattern>
   </servlet-mapping>
 
+  <!-- History -->
   <servlet>
     <servlet-name>HistoryServlet</servlet-name>
     <servlet-class>com.examapp.servlet.HistoryServlet</servlet-class>
@@ -93,9 +107,10 @@
     <servlet-name>HistoryServlet</servlet-name>
     <url-pattern>/history</url-pattern>
   </servlet-mapping>
-  
+
+  <!-- Welcome page -->
   <welcome-file-list>
     <welcome-file>login.jsp</welcome-file>
   </welcome-file-list>
-  
+
 </web-app>
