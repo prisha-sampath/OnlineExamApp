@@ -10,14 +10,24 @@ import java.util.List;
 import java.util.Map;
 
 public class QuizResultsDao {
-    
+
+    // =========================
+    // SAVE QUIZ RESULT
+    // =========================
     public static void saveQuizResult(String username, String quizType, int score, int totalQuestions) {
+
         int percentage = (score * 100) / totalQuestions;
-        String sql = "INSERT INTO quiz_results (username, quiz_type, score, total_questions, percentage, attempt_date) VALUES (?, ?, ?, ?, ?, NOW())";
+
+        String sql = "INSERT INTO quiz_results " +
+                     "(username, quiz_type, score, total_questions, percentage, attempt_date) " +
+                     "VALUES (?, ?, ?, ?, ?, NOW())";
+
         try (Connection connection = DBConnection.getConnection()) {
+
             if (connection == null) {
-                throw new SQLException("Database connection is null. Check NEON_DB_URL/credentials.");
+                throw new SQLException("Database connection is null");
             }
+
             try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
                 pstmt.setString(1, username);
                 pstmt.setString(2, quizType);
@@ -26,20 +36,32 @@ public class QuizResultsDao {
                 pstmt.setInt(5, percentage);
                 pstmt.executeUpdate();
             }
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
-    
+
+    // =========================
+    // GET ALL RESULTS (ADMIN)
+    // =========================
     public static List<Map<String, Object>> getAllResults() {
+
         List<Map<String, Object>> results = new ArrayList<>();
-        String sql = "SELECT username, quiz_type, score, total_questions, percentage, attempt_date FROM quiz_results ORDER BY attempt_date DESC";
+
+        String sql = "SELECT username, quiz_type, score, total_questions, " +
+                     "percentage, attempt_date " +
+                     "FROM quiz_results ORDER BY attempt_date DESC";
+
         try (Connection connection = DBConnection.getConnection()) {
+
             if (connection == null) {
-                throw new SQLException("Database connection is null. Check NEON_DB_URL/credentials.");
+                throw new SQLException("Database connection is null");
             }
+
             try (PreparedStatement pstmt = connection.prepareStatement(sql);
                  ResultSet rs = pstmt.executeQuery()) {
+
                 while (rs.next()) {
                     Map<String, Object> row = new HashMap<>();
                     row.put("username", rs.getString("username"));
@@ -51,33 +73,54 @@ public class QuizResultsDao {
                     results.add(row);
                 }
             }
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
         return results;
     }
-    
+
+    // =========================
+    // GET RESULTS BY USERNAME
+    // =========================
     public static List<Map<String, Object>> getResultsByUsername(String username) {
+
         List<Map<String, Object>> results = new ArrayList<>();
-        String sql = "SELECT username, quiz_type, score, total_questions, percentage, attempt_date FROM quiz_results WHERE username = ? ORDER BY attempt_date DESC";
-        try (Connection connection = DBConnection.getConnection();
-             PreparedStatement pstmt = connection.prepareStatement(sql)) {
-            pstmt.setString(1, username);
-            try (ResultSet rs = pstmt.executeQuery()) {
-                while (rs.next()) {
-                    Map<String, Object> row = new HashMap<>();
-                    row.put("username", rs.getString("username"));
-                    row.put("quizType", rs.getString("quiz_type"));
-                    row.put("score", rs.getInt("score"));
-                    row.put("totalQuestions", rs.getInt("total_questions"));
-                    row.put("percentage", rs.getInt("percentage"));
-                    row.put("attemptDate", rs.getTimestamp("attempt_date"));
-                    results.add(row);
+
+        String sql = "SELECT username, quiz_type, score, total_questions, " +
+                     "percentage, attempt_date " +
+                     "FROM quiz_results WHERE username = ? " +
+                     "ORDER BY attempt_date DESC";
+
+        try (Connection connection = DBConnection.getConnection()) {
+
+            if (connection == null) {
+                throw new SQLException("Database connection is null");
+            }
+
+            try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
+
+                pstmt.setString(1, username);
+
+                try (ResultSet rs = pstmt.executeQuery()) {
+                    while (rs.next()) {
+                        Map<String, Object> row = new HashMap<>();
+                        row.put("username", rs.getString("username"));
+                        row.put("quizType", rs.getString("quiz_type"));
+                        row.put("score", rs.getInt("score"));
+                        row.put("totalQuestions", rs.getInt("total_questions"));
+                        row.put("percentage", rs.getInt("percentage"));
+                        row.put("attemptDate", rs.getTimestamp("attempt_date"));
+                        results.add(row);
+                    }
                 }
             }
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
         return results;
     }
 }

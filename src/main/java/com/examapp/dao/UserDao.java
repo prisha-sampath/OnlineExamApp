@@ -39,7 +39,7 @@ public class UserDao {
     // used by RegisterServlet
     public boolean register(String username, String password) {
 
-        String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt(12));
+        String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
 
         // ✅ FIXED SQL (PostgreSQL / Neon compatible)
         String sql = "INSERT INTO users (username, password) VALUES (?, ?)";
