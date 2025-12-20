@@ -1,9 +1,9 @@
 package com.examapp.servlet;
 
-import com.examapp.dao.UserDao;
 import com.examapp.dao.DBConnection;
 
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 
+@WebServlet("/register")
 public class RegisterServlet extends HttpServlet {
 
     @Override
@@ -22,7 +23,7 @@ public class RegisterServlet extends HttpServlet {
         String password = request.getParameter("password");
         String confirm = request.getParameter("confirmPassword");
 
-        // password mismatch
+        // password mismatch check
         if (password == null || confirm == null || !password.equals(confirm)) {
             response.sendRedirect("register.jsp?error=1");
             return;
@@ -37,11 +38,12 @@ public class RegisterServlet extends HttpServlet {
             ps.setString(2, password);
 
             ps.executeUpdate();
+
             response.sendRedirect("login.jsp");
 
         } catch (Exception e) {
-            e.printStackTrace(); // IMPORTANT for logs
-            response.sendRedirect("register.jsp?error=1");
+            // 🔴 TEMPORARY: show REAL SQL error
+            throw new ServletException(e);
         }
     }
 }
