@@ -14,8 +14,6 @@ public class DBConnection {
             }
 
             Class.forName("org.postgresql.Driver");
-
-            // Neon PostgreSQL uses ONLY the URL
             return DriverManager.getConnection(url);
 
         } catch (Exception e) {
