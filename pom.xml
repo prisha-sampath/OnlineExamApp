@@ -35,14 +35,14 @@
             <scope>provided</scope>
         </dependency>
 
-        <!-- MySQL JDBC Driver (KEEP for now) -->
+        <!-- MySQL JDBC Driver -->
         <dependency>
             <groupId>com.mysql</groupId>
             <artifactId>mysql-connector-j</artifactId>
             <version>8.0.33</version>
         </dependency>
 
-        <!-- PostgreSQL JDBC Driver (NEW - Step 1) -->
+        <!-- PostgreSQL JDBC Driver -->
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
@@ -59,7 +59,8 @@
     </dependencies>
 
     <build>
-        <finalName>OnlineExamApp</finalName>
+        <finalName>ROOT</finalName>
+
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
