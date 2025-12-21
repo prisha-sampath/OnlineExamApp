@@ -7,14 +7,14 @@
 
     <groupId>com.examapp</groupId>
     <artifactId>OnlineExamApp</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0</version>
     <packaging>war</packaging>
 
-    <name>OnlineExamApp Maven Webapp</name>
+    <name>OnlineExamApp</name>
 
     <properties>
-        <maven.compiler.source>11</maven.compiler.source>
-        <maven.compiler.target>11</maven.compiler.target>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
     </properties>
 
     <dependencies>
@@ -27,7 +27,7 @@
             <scope>provided</scope>
         </dependency>
 
-        <!-- JSP API (provided by Tomcat) -->
+        <!-- JSP API -->
         <dependency>
             <groupId>jakarta.servlet.jsp</groupId>
             <artifactId>jakarta.servlet.jsp-api</artifactId>
@@ -35,14 +35,14 @@
             <scope>provided</scope>
         </dependency>
 
-        <!-- PostgreSQL JDBC Driver (MUST be included in WAR) -->
+        <!-- PostgreSQL JDBC DRIVER (MUST be packaged in WAR) -->
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
             <version>42.7.3</version>
         </dependency>
 
-        <!-- BCrypt -->
+        <!-- ✅ BCrypt password hashing (REQUIRED) -->
         <dependency>
             <groupId>org.mindrot</groupId>
             <artifactId>jbcrypt</artifactId>
@@ -52,7 +52,6 @@
     </dependencies>
 
     <build>
-        <!-- Deploy app as ROOT context -->
         <finalName>ROOT</finalName>
 
         <plugins>
@@ -63,4 +62,5 @@
             </plugin>
         </plugins>
     </build>
+
 </project>
