@@ -19,7 +19,7 @@
 
     <dependencies>
 
-        <!-- Servlet API -->
+        <!-- Servlet API (provided by Tomcat) -->
         <dependency>
             <groupId>jakarta.servlet</groupId>
             <artifactId>jakarta.servlet-api</artifactId>
@@ -27,7 +27,7 @@
             <scope>provided</scope>
         </dependency>
 
-        <!-- JSP API -->
+        <!-- JSP API (provided by Tomcat) -->
         <dependency>
             <groupId>jakarta.servlet.jsp</groupId>
             <artifactId>jakarta.servlet.jsp-api</artifactId>
@@ -35,21 +35,14 @@
             <scope>provided</scope>
         </dependency>
 
-        <!-- MySQL JDBC Driver -->
-        <dependency>
-            <groupId>com.mysql</groupId>
-            <artifactId>mysql-connector-j</artifactId>
-            <version>8.0.33</version>
-        </dependency>
-
-        <!-- PostgreSQL JDBC Driver -->
+        <!-- PostgreSQL JDBC Driver (MUST be included in WAR) -->
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
             <version>42.7.3</version>
         </dependency>
 
-        <!-- BCrypt for password hashing -->
+        <!-- BCrypt -->
         <dependency>
             <groupId>org.mindrot</groupId>
             <artifactId>jbcrypt</artifactId>
@@ -59,6 +52,7 @@
     </dependencies>
 
     <build>
+        <!-- Deploy app as ROOT context -->
         <finalName>ROOT</finalName>
 
         <plugins>
@@ -69,5 +63,4 @@
             </plugin>
         </plugins>
     </build>
-
 </project>
