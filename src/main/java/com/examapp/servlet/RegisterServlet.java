@@ -1,6 +1,7 @@
 package com.examapp.servlet;
 
 import com.examapp.dao.DBConnection;
+import org.mindrot.jbcrypt.BCrypt;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -23,11 +24,14 @@ public class RegisterServlet extends HttpServlet {
         String password = request.getParameter("password");
         String confirm = request.getParameter("confirmPassword");
 
-        // password mismatch check
+        // 1️⃣ Password match check
         if (password == null || confirm == null || !password.equals(confirm)) {
             response.sendRedirect("register.jsp?error=1");
             return;
         }
+
+        // 2️⃣ HASH the password (🔥 MOST IMPORTANT LINE 🔥)
+        String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
 
         String sql = "INSERT INTO users(username, password) VALUES (?, ?)";
 
@@ -35,14 +39,13 @@ public class RegisterServlet extends HttpServlet {
              PreparedStatement ps = con.prepareStatement(sql)) {
 
             ps.setString(1, username);
-            ps.setString(2, password);
+            ps.setString(2, hashedPassword); // ✅ STORE HASH, NOT PLAIN TEXT
 
             ps.executeUpdate();
 
             response.sendRedirect("login.jsp");
 
         } catch (Exception e) {
-            // 🔴 TEMPORARY: show REAL SQL error
             throw new ServletException(e);
         }
     }
