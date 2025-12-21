@@ -8,17 +8,15 @@ public class DBConnection {
     public static Connection getConnection() {
         try {
             String url = System.getenv("DATABASE_URL");
-            String user = System.getenv("DB_USER");
-            String password = System.getenv("DB_PASSWORD");
 
-            if (url == null || user == null || password == null) {
-                throw new RuntimeException(
-                    "DATABASE_URL / DB_USER / DB_PASSWORD not set"
-                );
+            if (url == null || url.isEmpty()) {
+                throw new RuntimeException("DATABASE_URL not set");
             }
 
             Class.forName("org.postgresql.Driver");
-            return DriverManager.getConnection(url, user, password);
+
+            // Neon PostgreSQL uses ONLY the URL
+            return DriverManager.getConnection(url);
 
         } catch (Exception e) {
             throw new RuntimeException("Failed to connect to PostgreSQL", e);
